@@ -56,14 +56,14 @@ router.get("/search", async (req, res) => {
     const searchRadius = radius ? parseFloat(radius) : 5; // default 5 km
 
     const result = await pool.query(
-      `SELECT d.*, s.store_name, s.latitude, s.longitude,
+      `SELECT d.*, s.name, s.latitude, s.longitude,
          (6371 * acos(
             cos(radians($1)) * cos(radians(s.latitude)) *
             cos(radians(s.longitude) - radians($2)) +
             sin(radians($1)) * sin(radians(s.latitude))
          )) AS distance
        FROM deals d
-       JOIN stores s ON d.store_id = s.id
+       JOIN users s ON d.store_id = s.id
        WHERE (6371 * acos(
             cos(radians($1)) * cos(radians(s.latitude)) *
             cos(radians(s.longitude) - radians($2)) +

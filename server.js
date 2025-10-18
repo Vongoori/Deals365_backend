@@ -10,7 +10,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// ✅ Allow requests from your React app
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true, // if you're sending cookies
+}));
+
 app.use(express.json());
 
 // Debugging: log all incoming requests
